@@ -1,0 +1,9 @@
+come,vegetariano,idade,diabético,classe
+pouco,sim,velho,sim,magro
+médio,sim,velho,não,magro
+muito,não,velho,sim,gordo
+pouco,não,velho,não,magro
+médio,não,jovem,sim,gordo
+pouco,sim,jovem,não,magro
+muito,não,velho,não,gordo
+médio,não,jovem,sim,gordo
