@@ -12,4 +12,4 @@ Boa,Alta,Adequada,Acima de $35k,Baixo
 Boa,Alta,Nenhuma,$0 a $15k,Alto
 Boa,Alta,Nenhuma,$15 a $35k,Moderado
 Boa,Alta,Nenhuma,Acima de $35k,baixo
-Ruim,Alta,Nenhuma $15 a $35k,Alto
+Ruim,Alta,Nenhuma,$15 a $35k,Alto
