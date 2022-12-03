@@ -1,10 +1,6 @@
 ANTECEDENTE,CONSEQUENTE
-K and L and M,I
-I and L and J,Q
-C and D and E,B
-A and B,Q
-L and N and O and P,Q
-C and H,R
-R and J and M,S
-F and H,B
-G,F
+PELO,MAMIFERO
+LEITE,MAMIFERO
+PENAS,AVE
+VOA and OVOS,AVE
+MAMIFERO and CARNE,CARNIVORO

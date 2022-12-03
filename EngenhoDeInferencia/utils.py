@@ -18,11 +18,16 @@ def scan():
             fatos.append(f)
     
     for r in base_regras.ANTECEDENTE:
-        for f in re.findall('[A-Z]', r):
-            if f not in fatos:
+        for f in re.findall('[A-Z]*', r):
+            if f not in fatos and f != '':
                 fatos.append(f)
-    
     return fatos
+
+def show_rules():
+    base_fatos, base_regras = importKnowledgeBase()
+
+    for rule in base_regras:
+        print(rule)
 
 def read_question(fatos):
     while True:
@@ -30,4 +35,4 @@ def read_question(fatos):
         if q in fatos:
             return q
         else:
-            print('Você precisa digitar a letra de um fato existente!')
+            print('Você precisa digitar uma proposição existente!')

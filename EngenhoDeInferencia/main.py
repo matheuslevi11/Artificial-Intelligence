@@ -1,6 +1,5 @@
-import pandas as pd
-import re
-from utils import importKnowledgeBase, read_question, scan
+from utils import *
+from style import *
 
 def parse_rule_forward(rule):
     rule = rule.split(' ')
@@ -102,13 +101,19 @@ def infer_mixed():
             base_fatos.loc[len(base_fatos.index)] = [rule, 'True']
 
 if __name__ == '__main__':
-    print('Bem vindo a Máquina de Inferência')
-    print('Para alimentar a base de conhecimento, adicione os dados nos arquivos da pasta BaseDeConhecimento')
-    print('Foram detectados os seguintes fatos:', end=' ')
+    print_red('Fulano')
+    print('Bem vindo ao Expert UFAL')
+    print('Foi importada uma base de regras dos arquivos da pasta BaseDeConhecimento')
+    print('Nesta base foram detectadas as seguintes proposições:', end=' ')
     fatos = scan()
     for fato in fatos:
         print(fato, end=' ')
     print()
+
+    print()
+    answer = input('Gostaria de ver as regras da base? (S/N)')
+    if "S" in answer.upper():
+        show_rules()
 
     q = read_question(fatos)
     global base_fatos, base_regras
