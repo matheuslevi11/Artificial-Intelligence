@@ -17,8 +17,10 @@ def parse_rule(rule):
     rule = rule.split(' ')
     for i in range(len(rule)):
         e = rule[i]
-        if e != 'and' and e != 'or':
+        if e != 'and' and e != 'or':    
             rule[i] = infer_backwards(e)
+            if '!' in e:
+                rule[i] = not rule[i]
     return rule
 
 def evaluate_expressions(exps):
@@ -46,21 +48,25 @@ def evaluate_expressions(exps):
     return exps[0]
             
 def infer_backwards(goal):
-    global base_fatos, base_regras
+    global base_fatos, base_regras, explanation
 
     if goal in base_fatos.FATO.to_list():
         value = base_fatos[base_fatos.FATO == goal].values[0][1]
+        explanation.append(goal)
         return value
 
     for i, r in base_regras.iterrows():
         if goal == r['CONSEQUENTE']:
             expressions = parse_rule(r['ANTECEDENTE'])
-            return evaluate_expressions(expressions)
+            value = evaluate_expressions(expressions)
+            if value:
+                explanation.append(get_rule(r))
+            return value
     
-    print(f'Não consigo inferir {goal}')
+    print(f'O animal possui esta característica? {goal}')
     
     # Pergunta ao usuário já que o fato não pode ser inferido e salva na memória de trabalho
-    value = input(f'Valor de {goal} (V/F): ').upper()
+    value = input(f'{goal} (V/F): ').upper()
     value = 'True' if value == 'V' else 'False'
     base_fatos.loc[len(base_fatos.index)] = [goal, value]
     
@@ -101,13 +107,12 @@ def infer_mixed():
             base_fatos.loc[len(base_fatos.index)] = [rule, 'True']
 
 if __name__ == '__main__':
-    print_red('Fulano')
-    print('Bem vindo ao Expert UFAL')
-    print('Foi importada uma base de regras dos arquivos da pasta BaseDeConhecimento')
+    print_yellow('                           Bem vindo ao Expert UFAL\n')
+    print('Foi importada uma base de regras dos arquivos da pasta BaseDeConhecimento\n')
     print('Nesta base foram detectadas as seguintes proposições:', end=' ')
     fatos = scan()
     for fato in fatos:
-        print(fato, end=' ')
+        print(fato, end=', ')
     print()
 
     print()
@@ -116,7 +121,8 @@ if __name__ == '__main__':
         show_rules()
 
     q = read_question(fatos)
-    global base_fatos, base_regras
+    global base_fatos, base_regras, explanation
+    explanation = []
     base_fatos, base_regras = importKnowledgeBase()
     print('Gostaria de usar encadeamento para frente ou para trás?')
     choice = input('[1] Para Frente\n[2] Para trás\n[3] Misto')
@@ -124,6 +130,8 @@ if __name__ == '__main__':
         infer_forwards()
     elif choice == '2':
         answer = infer_backwards(q)
-        print(f'A resposta é: {answer}')
+        if answer:
+            print_cyan(f"A seguinte sequência de regras confirmou que {q} é verdadeiro")
+            
     else:
         infer_mixed()
