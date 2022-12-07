@@ -86,7 +86,11 @@ def grow_knowledge(fact):
                         print_yellow('--------------------------------------------------------------------------')
                         print_cyan('Cheguei a esta conclusão pelos seguintes motivos:')
                         for rule, conclusion in explanation:
-                            print_purple(f"{rule} -> {conclusion}")
+                            rule = rule.replace(' ', '').split('and')
+                            print("Por essas características:", end=' ')
+                            for r in rule:
+                                print(f'{r.capitalize()}, ', end='')
+                            print(f'conclui-se que é {conclusion.capitalize()}')
                         exit()
 
     return False
@@ -123,7 +127,11 @@ def guess():
         print_yellow('--------------------------------------------------------------------------')
         print_cyan('Cheguei a esta conclusão pelos seguintes motivos:')
         for rule, conclusion in explanation:
-            print_purple(f"{rule} -> {conclusion}")
+            rule = rule.replace(' ', '').split('and')
+            print("Por essas características:", end=' ')
+            for r in rule:
+                print(f'{r.capitalize()}, ', end='')
+            print(f',conclui-se que é {conclusion.capitalize()}')
             
 if __name__ == '__main__':
     global fact_list
